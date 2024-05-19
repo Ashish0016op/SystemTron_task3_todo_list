@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<Style>
+    body{
+        display: flex;
+        justify-content: center;
+        background-image: linear-gradient(to bottom right, red, yellow);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+    }
+.container{
+    margin-top: 20px;
+    border: 2px solid black;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-bottom: 64px;
+    border-radius: 15px;
+    padding-top: 10px;
+    height: fit-content;
+    background-color: white;
+}
+.inputField{
+    border-radius: 28px;
+    height: 30px;
+    width: 90%;
+    padding-left: 15px;
+    font-weight: bold;
+    font-size: larger;
+}
+.input_btn_container{
+    position: relative;
+    width: 250px;
+    
+}
+.btn{
+    position: absolute;
+    right: 0;
+    border-radius: 13px;
+    cursor: pointer;
+    height: 35px;
+    width: 65px;
+    background-color: #48BB78;
+    color: white;
+}
+.task_btn{
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #38A169;
+    transition: ease-in;
+}
+.todo_list_box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.img_Checked {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    background-image: url('./img/unchecked.webp');
+    background-size: cover;
+}
+
+.img_Checked.checked {
+    background-image: url('./img/checked.jpg');
+}
+.task_detail_box {
+    flex-grow: 1;
+    width: 100px;
+}
+.task_detail_box.checked {
+    text-decoration: line-through;
+}
+
+
+</Style>
+<body>
+    <div class="container">
+        <p>To-Do List</p>
+        <div class="input_btn_container">
+            <input type="text" id="task_input" class="inputField"/>
+            <button onclick="handleTaskInput()" class="btn">Add</button>
+        </div>
+    </div>
+
+<script>
+        function handleTaskInput() {
+            const inputData = document.getElementById('task_input').value;
+            if (inputData.trim() === "") return; // Prevent adding empty tasks
+
+            const div1 = document.createElement('div');
+            div1.className = "todo_list_box";
+
+            const div2 = document.createElement('div');
+            div2.className = "img_Checked";
+            div2.addEventListener('click', function() { toggleChecked(div2); });
+
+            const p = document.createElement('p');
+            p.className = "task_detail_box";
+            p.textContent = inputData;
+
+            const button = document.createElement('button');
+            button.className = "task_btn";
+            button.textContent = "X";
+            button.addEventListener('click', function() { handleDelete(button); });
+
+            div1.appendChild(div2);
+            div1.appendChild(p);
+            div1.appendChild(button);
+
+            const mainDiv = document.querySelector('.container');
+            mainDiv.appendChild(div1);
+
+            document.getElementById('task_input').value = ""; // Clear the input field
+        }
+
+        function toggleChecked(element) {
+            element.classList.toggle('checked');
+            const taskDetail = element.nextElementSibling;
+            if (taskDetail.classList.contains('task_detail_box')) {
+                taskDetail.classList.toggle('checked');
+            }
+        }
+        function handleDelete(button) {
+            const todoListBox = button.parentElement;
+            todoListBox.remove();
+        }
+</script>
+</body>
+</html>
+
+
+
+
